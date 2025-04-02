@@ -22,6 +22,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 
+# COPY project files before installing
+COPY pyproject.toml .
+COPY src/ ./src/
+
 # Sync the project with uv (using psycopg2-binary instead of psycopg2)
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv pip install --system psycopg2-binary && \
