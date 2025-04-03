@@ -13,6 +13,7 @@ INSERT INTO dj.service (name, description, category, base_price, is_active) VALU
 ('Video Projection', 'Projection screen with visual effects', 'Equipment', 1000.00, true);
 
 -- Insert sample packages
+-- todo: Check why this data isn't available in the database!
 INSERT INTO dj.package (name, description, price, duration, capacity, features, is_active) VALUES
 ('Simple', 'Basic audio package for small gatherings', 4499.00, 300, '30-50 people', 
   '[

@@ -1,4 +1,4 @@
-FROM postgres:16
+FROM postgres:17
 
 ENV LANG=en_US.utf8
 ENV TZ=Etc/UTC

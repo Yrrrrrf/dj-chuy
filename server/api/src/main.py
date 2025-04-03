@@ -50,10 +50,11 @@ model_manager = ModelManager(
 # Display database statistics
 model_manager.log_metadata_stats()
 
-# Initialize API generator
+
+
 api_prism = ApiPrism(
     config=PrismConfig(
-        project_name=f"{db_client.config.database.capitalize()} API",
+        project_name=f"{db_client.config.database.title().replace('_', ' ')} API",
         version="0.1.0",
     ),
     app=app,

@@ -21,7 +21,6 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-
 # COPY project files before installing
 COPY pyproject.toml .
 COPY src/ ./src/

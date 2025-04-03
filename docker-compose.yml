@@ -1,26 +1,26 @@
-# GWA Docker Compose
+# dj-chuy Docker Compose
 
 services:
   db:
     build:
       context: ./server/db/
       dockerfile: db.Dockerfile
-    container_name: gwa-db
+    container_name: dj-chuy-db
     environment:
-      - POSTGRES_DB=${DB_NAME:-gwa}
-      - POSTGRES_USER=${DB_OWNER_ADMIN:-gwa_owner}
+      - POSTGRES_DB=${DB_NAME:-dj-chuy}
+      - POSTGRES_USER=${DB_OWNER_ADMIN:-chuy}
       - POSTGRES_PASSWORD=${DB_OWNER_PWORD:-password}
       # Pass these variables explicitly for the init script
-      - DB_NAME=${DB_NAME:-gwa}
-      - DB_OWNER_ADMIN=${DB_OWNER_ADMIN:-gwa_owner}
+      - DB_NAME=${DB_NAME:-dj-chuy}
+      - DB_OWNER_ADMIN=${DB_OWNER_ADMIN:-chuy}
       - DB_OWNER_PWORD=${DB_OWNER_PWORD:-password}
       - TZ=UTC
     ports:
       - "5432:5432"
     networks:
-      - gwa-network
+      - dj-chuy-network
     # healthcheck:
-    #   test: ["CMD-SHELL", "pg_isready -U ${DB_OWNER_ADMIN:-gwa_owner} -d ${DB_NAME:-gwa}"]
+    #   test: ["CMD-SHELL", "pg_isready -U ${DB_OWNER_ADMIN:-chuy} -d ${DB_NAME:-dj-chuy}"]
     #   interval: 10s
     #   timeout: 5s
     #   retries: 5
@@ -30,11 +30,11 @@ services:
     build:
       context: ./server/api/
       dockerfile: api.Dockerfile
-    container_name: gwa-api
+    container_name: dj-chuy-api
     environment:
-      - DB_NAME=${DB_NAME:-gwa}
-      - DB_HOST=gwa-db
-      - DB_OWNER_ADMIN=${DB_OWNER_ADMIN:-gwa_owner}
+      - DB_NAME=${DB_NAME:-dj-chuy}
+      - DB_HOST=dj-chuy-db
+      - DB_OWNER_ADMIN=${DB_OWNER_ADMIN:-chuy}
       - DB_OWNER_PWORD=${DB_OWNER_PWORD:-password}
       - PYTHONDONTWRITEBYTECODE=1  # Prevents Python from writing pyc files to disc
       - PYTHONUNBUFFERED=1  # Prevents Python from buffering stdout and stderr
@@ -45,7 +45,7 @@ services:
     depends_on:
       - db
     networks:
-      - gwa-network
+      - dj-chuy-network
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
     #   interval: 30s
@@ -53,28 +53,26 @@ services:
     #   retries: 3
     #   start_period: 10s
 
-  # gwa-hub:
+  # dj-chuy-hub:
   #   build:
   #     context: ./core
   #     dockerfile: hub.Dockerfile
-  #   container_name: gwa-hub
+  #   container_name: dj-chuy-hub
   #   volumes:
   #     - ./core:/app
-  #     - ../rune-lab:/app/node_modules/rune-lab
-  #     - ../../typescript/ts-forge/ts-forge:/app/node_modules/ts-forge
   #     - /app/node_modules  # This prevents the mounted volume from overwriting node_modules
   #   ports:
   #     - "5173:5173"
   #   environment:
   #     - NODE_ENV=development
   #   networks:
-  #     - gwa-network
+  #     - dj-chuy-network
 
 networks:
-  gwa-network:
-    name: gwa-network
+  dj-chuy-network:
+    name: dj-chuy-network
     driver: bridge
 
 volumes:
   postgres_data:
-    name: gwa-postgres-data
+    name: dj-chuy-postgres-data
